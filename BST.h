@@ -1,9 +1,9 @@
 //
-// Created by David on 14/01/2018.
+// Created by Joe Kawai on 14/1/18.
 //
 
-#ifndef CODE_BST_H
-#define CODE_BST_H
+#ifndef DSA_ASSIGNMENT_BST_H
+#define DSA_ASSIGNMENT_BST_H
 
 
 class BST {
@@ -11,4 +11,4 @@ class BST {
 };
 
 
-#endif //CODE_BST_H
+#endif //DSA_ASSIGNMENT_BST_H

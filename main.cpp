@@ -1,5 +1,3 @@
-// Data Structure & Algorithms
-
 #include <iostream>
 
 int main() {

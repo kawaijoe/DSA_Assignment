@@ -13,14 +13,12 @@ using namespace std;
 #include "BinaryNode.h"
 
 
-class BST
-{
+class BST {
 private:
-
-    BinaryNode* root; // root of the BST
+    // root of the BST
+    BinaryNode* root;
 
 public:
-
     // Constructor
     BST();
 

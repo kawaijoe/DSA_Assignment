@@ -3,14 +3,14 @@
 //
 
 #include "BST.h"
+
 using namespace std;
 
-#define max(x,y) (x > y) ? x : y
+#define max(x, y) (((x) > (y)) ? (x) : (y))
 
 
 // -------- Constructor --------------
-BST::BST()
-{
+BST::BST() {
     root = nullptr;
 }
 
@@ -18,24 +18,26 @@ BST::~BST() = default;
 
 
 // -------- Search an item in the binary search Tree --------------------------------
-BinaryNode* BST::search(ItemType target) {
+BinaryNode *BST::search(ItemType target) {
     return search(root, target);
 }
 
-BinaryNode* BST::search(BinaryNode* t, ItemType target) {
-    if (t == nullptr) {
-        return nullptr; // item Not Found
-    }
-    else {
-        if (t->item == target) {
-            return t; // item found
-        }
-        else {
-            if (t->item > target) {
-                return search(t->left, target); // search left subtree
+BinaryNode *BST::search(BinaryNode *t, ItemType target) {
+    if(!t) {
+        // item Not Found
+        return nullptr;
+    } else {
+        if(t->item == target) {
+            // item found
+            return t;
+        } else {
+            if(t->item > target) {
+                // search left subtree
+                return search(t->left, target);
+            } else {
+                // search right subtree
+                return search(t->right, target);
             }
-            else
-                return search(t->right, target); // search right subtree
         }
     }
 }
@@ -47,23 +49,22 @@ void BST::insert(ItemType item) {
     return insert(root, item);
 }
 
-void BST::insert(BinaryNode* &t, ItemType item) {
+void BST::insert(BinaryNode *&t, ItemType item) {
 
-    if (t == nullptr) {   // base case, if the tree is empty
-
-        auto * newNode = new BinaryNode;
+    // base case, if the tree is empty
+    if(!t) {
+        auto *newNode = new BinaryNode;
         newNode->item = item;
         newNode->left = nullptr;
         newNode->right = nullptr;
         t = newNode;
-    }
-    else {
-
-        if (item < t->item) {
-            insert(t->left, item); // item is less than centre
-        }
-        else {
-            insert(t->right, item); // item is more than centre
+    } else {
+        if(item < t->item) {
+            // item is less than centre
+            insert(t->left, item);
+        } else {
+            // item is more than centre
+            insert(t->right, item);
         }
     }
 
@@ -74,75 +75,71 @@ void BST::remove(ItemType item) {
     return remove(root, item);
 }
 
-void BST::remove(BinaryNode* &t, ItemType target) {
+void BST::remove(BinaryNode *&t, ItemType target) {
 
-    BinaryNode* current = t;
-    BinaryNode* parent = nullptr;
+    BinaryNode *current = nullptr;
+    BinaryNode *root = t;
     bool isLeftChild = false;
     bool found = false;
-    while (!found && current!= nullptr) {
-        if (target == current->item) {
+
+    while(!found && root != nullptr) {
+        if(target == current->item) {
             found = true;
-        }
-        else {
-            parent = current;
-            if (target < current->item) {
-                current = current->left;    // go down the left subtree
+        } else {
+            current = root;
+            if(target < current->item) {
+                // go down the left subtree
+                current = current->left;
                 isLeftChild = true;
-            }
-            else {
-                current = current->right;   // go down the right subtree
+            } else {
+                // go down the right subtree
+                current = current->right;
                 isLeftChild = false;
             }
         }
-
     }
-    if (found) {
 
-        // ----------------------- case 1 : node is a leaf ---------------------------------
-        if (current->left == nullptr && current->right == nullptr) {
+    if(found) {
+        if(current->left == nullptr && current->right == nullptr) {
 
-            if (current == t) {      // only one node left
+            // ----------------------- case 1 : node is a leaf ---------------------------------
+            if(current == t) {
                 t = nullptr;
-            }
-            else {
-                if (isLeftChild) {
-                    parent->left = nullptr;  // Check if node is a left child, then change the parent left node to null
+            } else {
+                if(isLeftChild) {
+                    // Check if node is a left child, then change the parent left node to null
+                    root->left = nullptr;
+                } else {
+                    // Check if node is a right child, then change the parent right node to null
+                    root->right = nullptr;
                 }
-                else {
-                    parent->right = nullptr; // Check if node is a right child, then change the parent right node to null
-                }
             }
-        }
+        } else if(current->left == nullptr) {
 
             // ------------------------ case 2: node has 1 child --------------------------------
-        else if (current->left == nullptr) {
-
-            if (isLeftChild) {
-                parent->left = current->right;
+            if(current->left == nullptr) {
+                t = current->right;
+            } else if(isLeftChild) {
+                root->left = current->right;
+            } else {
+                root->right = current->right;
             }
-            else {
-                parent->right = current->right;
+        } else if(current->right == nullptr) {
+            if(current == t) {
+                t = current->left;
+            } else if(isLeftChild) {
+                root->left = current->left;
+            } else {
+                root->right = current->left;
             }
-        }
-        else if (current->right == nullptr) {
-
-            if (isLeftChild) {
-                parent->left = current->left;
-            }
-            else {
-                parent->right = current->left;
-            }
-        }
+        } else {
 
             // ---------------------- Case 3: node has 2 children ------------------------------
-        else{
             // find the successor (rightmost child in the node's Left subtree)
-            BinaryNode* successor = current->right;
-            while (successor->right != nullptr) {
+            BinaryNode *successor = current->left;
+            while(successor->right != nullptr) {
                 successor = successor->right;
             }
-
 
             int n = successor->item;
 
@@ -157,15 +154,15 @@ void BST::remove(BinaryNode* &t, ItemType target) {
 
 // -------------- traverse the tree in "inOrder" process (smallest to biggest)-------------------
 void BST::inorder() {
-    if (isEmpty()) {
+    if(isEmpty()) {
         cout << "No item found" << endl;
     } else {
         inorder(root);
     }
 }
 
-void BST::inorder(BinaryNode* t) {
-    if (t != nullptr) {
+void BST::inorder(BinaryNode *t) {
+    if(t) {
         inorder(t->left);
         cout << t->item << endl;
         inorder(t->right);
@@ -174,15 +171,15 @@ void BST::inorder(BinaryNode* t) {
 
 // ----------------- traverse the tree in "PreOrder" process (Parent first then Child) -----------------
 void BST::preorder() {
-    if (isEmpty()) {
+    if(isEmpty()) {
         cout << "No items found" << endl;
     } else {
         preorder(root);
     }
 }
 
-void BST::preorder(BinaryNode* t) {
-    if (t != nullptr) {
+void BST::preorder(BinaryNode *t) {
+    if(t) {
         cout << t->item << endl;
         preorder(t->left);
         preorder(t->right);
@@ -191,15 +188,15 @@ void BST::preorder(BinaryNode* t) {
 
 // ------------------- traverse the tree in "PostOrder" process (Children first then parent) ---------------------
 void BST::postorder() {
-    if (isEmpty()) {
+    if(isEmpty()) {
         cout << "No items found" << endl;
-    } else{
+    } else {
         postorder(root);
     }
 }
 
-void BST::postorder(BinaryNode* t) {
-    if (t != nullptr) {
+void BST::postorder(BinaryNode *t) {
+    if(t) {
         postorder(t->left);
         postorder(t->right);
         cout << t->item << endl;
@@ -211,12 +208,9 @@ int BST::getHeight() {
     return getHeight(root);
 }
 
-int BST::getHeight(BinaryNode* t) {
-    if (t == nullptr) {
-        return 0;
-    } else {
-        return 1 + max(getHeight(t->left), getHeight(t->right));
-    }
+int BST::getHeight(BinaryNode *t) {
+    if (t) return 1 + max(getHeight(t->left), getHeight(t->right));
+    return 0;
 }
 
 // ---------------------- count the number of the Nodes in the Tree ------------------------------
@@ -224,12 +218,9 @@ int BST::countNodes() {
     return countNodes(root);
 }
 
-int BST::countNodes(BinaryNode* t) {
-    if (t == nullptr) {
-        return 0;
-    } else {
-        return 1 + countNodes(t->left) + countNodes(t->right);
-    }
+int BST::countNodes(BinaryNode *t) {
+    if(t) return 1 + countNodes(t->left) + countNodes(t->right);
+    return 0;
 }
 
 // ------------------------ check if the binary search tree is balanced ------------------------------
@@ -237,26 +228,23 @@ bool BST::isBalanced() {
     return isBalanced(root);
 }
 
-bool BST::isBalanced(BinaryNode *t)
-{
-    if (t != nullptr)
-    {
-        if (getHeight(t) < 4)
-        {
+bool BST::isBalanced(BinaryNode *t) {
+    if(!t) {
+        if(getHeight(t) < 4) {
             int leftHeight = getHeight(t->left);
             int rightHeight = getHeight(t->right);
 
-            return abs(leftHeight - rightHeight) <= 1;
+            return abs(leftHeight-rightHeight) <= 1;
+        } else {
+            return isBalanced(t->left) && isBalanced(t->right);
         }
-        else
-            return (isBalanced(t->left) && isBalanced(t->right));
-    }
-    else
+    } else {
         return true;
+    }
 }
 
 
 // --------------------- Check if the binary search tree is empty -------------------------------
 bool BST::isEmpty() {
-    return (root == nullptr);
+    return root == nullptr;
 }

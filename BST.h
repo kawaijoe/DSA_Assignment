@@ -5,8 +5,10 @@
 #ifndef DSA_ASSIGNMENT_BST_H
 #define DSA_ASSIGNMENT_BST_H
 
-#include<iostream>
-#include<string>
+#include <iostream>
+#include <string>
+#include <set>
+#include <vector>
 
 using namespace std;
 
@@ -17,6 +19,16 @@ class BST {
 private:
     // root of the BST
     BinaryNode* root;
+
+    // isBalance() helper
+    void checkNode(set<int> &heightSet, BinaryNode *node, int height);
+
+    // balance() helper
+    int getHeightDiff(BinaryNode* temp);
+    BinaryNode* rr_rotation(BinaryNode* parent);
+    BinaryNode* ll_rotation(BinaryNode* parent);
+    BinaryNode* lr_rotation(BinaryNode* parent);
+    BinaryNode* rl_rotation(BinaryNode* parent);
 
 public:
     // Constructor
@@ -65,6 +77,9 @@ public:
     bool isBalanced();
     bool isBalanced(BinaryNode* t);
 
+    // Balance tree
+    BinaryNode* balance(BinaryNode* temp);
+    BinaryNode* balance();
 };
 
 #endif //DSA_ASSIGNMENT_BST_H

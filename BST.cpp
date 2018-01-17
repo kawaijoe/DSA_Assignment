@@ -8,6 +8,7 @@ using namespace std;
 
 #define max(x, y) (((x) > (y)) ? (x) : (y))
 
+class List;
 
 // -------- Constructor --------------
 BST::BST() {
@@ -46,12 +47,11 @@ BinaryNode *BST::search(BinaryNode *t, ItemType target) {
 //----------- insert an item into the binary search tree ---------------------------------------------------------------------
 
 void BST::insert(ItemType item) {
-    return insert(root, item);
+    insert(root, item);
+    root = balance();
 }
 
 void BST::insert(BinaryNode *&t, ItemType item) {
-
-    // base case, if the tree is empty
     if(!t) {
         auto *newNode = new BinaryNode;
         newNode->item = item;
@@ -67,26 +67,25 @@ void BST::insert(BinaryNode *&t, ItemType item) {
             insert(t->right, item);
         }
     }
-
 }
 
 // ----------------- delete an item from the binary search tree ----------------------------------------------------
 void BST::remove(ItemType item) {
-    return remove(root, item);
+    remove(root, item);
+    root = balance();
 }
 
 void BST::remove(BinaryNode *&t, ItemType target) {
-
-    BinaryNode *current = nullptr;
-    BinaryNode *root = t;
+    BinaryNode *current = t;
+    BinaryNode *parent = nullptr;
     bool isLeftChild = false;
     bool found = false;
 
-    while(!found && root != nullptr) {
+    while(!found && current != nullptr) {
         if(target == current->item) {
             found = true;
         } else {
-            current = root;
+            parent = current;
             if(target < current->item) {
                 // go down the left subtree
                 current = current->left;
@@ -108,32 +107,33 @@ void BST::remove(BinaryNode *&t, ItemType target) {
             } else {
                 if(isLeftChild) {
                     // Check if node is a left child, then change the parent left node to null
-                    root->left = nullptr;
+                    parent->left = nullptr;
                 } else {
                     // Check if node is a right child, then change the parent right node to null
-                    root->right = nullptr;
+                    parent->right = nullptr;
                 }
             }
         } else if(current->left == nullptr) {
 
             // ------------------------ case 2: node has 1 child --------------------------------
-            if(current->left == nullptr) {
+            if(current == t) {
                 t = current->right;
             } else if(isLeftChild) {
-                root->left = current->right;
+                parent->left = current->right;
             } else {
-                root->right = current->right;
+                parent->right = current->right;
             }
+
         } else if(current->right == nullptr) {
             if(current == t) {
                 t = current->left;
             } else if(isLeftChild) {
-                root->left = current->left;
+                parent->left = current->left;
             } else {
-                root->right = current->left;
+                parent->right = current->left;
             }
-        } else {
 
+        } else {
             // ---------------------- Case 3: node has 2 children ------------------------------
             // find the successor (rightmost child in the node's Left subtree)
             BinaryNode *successor = current->left;
@@ -150,6 +150,7 @@ void BST::remove(BinaryNode *&t, ItemType target) {
             current->item = n;
         }
     }
+
 }
 
 // -------------- traverse the tree in "inOrder" process (smallest to biggest)-------------------
@@ -209,7 +210,7 @@ int BST::getHeight() {
 }
 
 int BST::getHeight(BinaryNode *t) {
-    if (t) return 1 + max(getHeight(t->left), getHeight(t->right));
+    if(t) return 1 + max(getHeight(t->left), getHeight(t->right));
     return 0;
 }
 
@@ -229,22 +230,82 @@ bool BST::isBalanced() {
 }
 
 bool BST::isBalanced(BinaryNode *t) {
-    if(!t) {
-        if(getHeight(t) < 4) {
-            int leftHeight = getHeight(t->left);
-            int rightHeight = getHeight(t->right);
-
-            return abs(leftHeight-rightHeight) <= 1;
-        } else {
-            return isBalanced(t->left) && isBalanced(t->right);
-        }
-    } else {
-        return true;
-    }
+    set<int> heightSet;
+    checkNode(heightSet, t, 0);
+    vector<int> v(heightSet.begin(), heightSet.end());
+    return (heightSet.size() < 3) && ((heightSet.size() == 2) ? v.at(1) - v.at(0) < 2 : true);
 }
 
+void BST::checkNode(set<int> &heightSet, BinaryNode *node, int height) {
+    height++;
+
+    if(!node->right || !node->left) heightSet.insert(height);
+    if(node->right) checkNode(heightSet, node->right, height);
+    if(node->left) checkNode(heightSet, node->left, height);
+}
 
 // --------------------- Check if the binary search tree is empty -------------------------------
 bool BST::isEmpty() {
     return root == nullptr;
+}
+
+// Height Difference
+int BST::getHeightDiff(BinaryNode *temp) {
+    return countNodes(temp->left) - countNodes(temp->right);
+}
+
+// Right- Right Rotation
+BinaryNode* BST::rr_rotation(BinaryNode *parent) {
+    BinaryNode *temp;
+    temp = parent->right;
+    parent->right = temp->left;
+    temp->left = parent;
+    return temp;
+}
+
+// Left- Left Rotation
+BinaryNode* BST::ll_rotation(BinaryNode *parent) {
+    BinaryNode *temp;
+    temp = parent->left;
+    parent->left = temp->right;
+    temp->right = parent;
+    return temp;
+}
+
+// Left - Right Rotation
+BinaryNode* BST::lr_rotation(BinaryNode *parent) {
+    BinaryNode *temp;
+    temp = parent->left;
+    parent->left = rr_rotation(temp);
+    return ll_rotation(parent);
+}
+
+// Right- Left Rotation
+BinaryNode* BST::rl_rotation(BinaryNode *parent) {
+    BinaryNode *temp;
+    temp = parent->right;
+    parent->right = ll_rotation(temp);
+    return rr_rotation(parent);
+}
+
+// Balancing AVL Tree
+BinaryNode* BST::balance() {
+    return balance(root);
+}
+
+BinaryNode* BST::balance(BinaryNode *temp) {
+    int bal_factor = getHeightDiff(temp);
+    cout << bal_factor <<endl;
+    if(bal_factor > 1) {
+        if(getHeightDiff(temp->left) > 0)
+            temp = ll_rotation(temp);
+        else
+            temp = lr_rotation(temp);
+    } else if(bal_factor < -1) {
+        if(getHeightDiff(temp->right) > 0)
+            temp = rl_rotation(temp);
+        else
+            temp = rr_rotation(temp);
+    }
+    return temp;
 }

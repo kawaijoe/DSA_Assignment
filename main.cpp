@@ -12,6 +12,7 @@ int main() {
     int dataArray[10] = {55, 28, 87, 32, 90, 16, 45, 79, 66, 30};
 
     for(int i : dataArray) {
+        cout << i << endl << endl;
         bst.insert(i);
     }
 

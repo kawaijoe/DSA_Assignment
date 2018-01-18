@@ -251,7 +251,7 @@ bool BST::isEmpty() {
 
 // Height Difference
 int BST::getHeightDiff(BinaryNode *temp) {
-    return countNodes(temp->left) - countNodes(temp->right);
+    return getHeight(temp->left) - getHeight(temp->right);
 }
 
 // Right- Right Rotation

@@ -78,8 +78,9 @@ public:
     bool isBalanced(BinaryNode* t);
 
     // Balance tree
-    BinaryNode* balance(BinaryNode* temp);
     BinaryNode* balance();
+    BinaryNode* balance(BinaryNode* temp);
+
 };
 
 #endif //DSA_ASSIGNMENT_BST_H

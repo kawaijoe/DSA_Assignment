@@ -1,7 +1,10 @@
+#include <cstdio>
+#include <cmath>
 #include <iostream>
 #include "BST.h"
 
 
+bool isInteger(double num);
 void displayMenu();
 
 int main() {
@@ -12,26 +15,40 @@ int main() {
     int dataArray[10] = {55, 28, 87, 32, 90, 16, 45, 79, 66, 30};
 
     for(int i : dataArray) {
-        cout << i << endl << endl;
         bst.insert(i);
     }
 
-    int option = 1;
 
-    while(option != 0) {
+    int option = 0;
+
+    while(option != 8) {
         displayMenu();
-        cin >> option;
+        cout << "Enter option : ";
+        if (!(cin >> option)) {
+            cin.clear();
+            cin.ignore(1000, '\n');
+        }
 
         if(option == 1)    // display items
             bst.inorder();
         else if(option == 2) {      // search Item
             cout << "Enter a number to search : ";
             cin >> target;
+
+            while(cin.fail() || !isInteger(target)) {   // checks if input is integer
+                cout << "Please enter a number..." << endl;
+                cout << "Enter a number to search: ";
+                cin.clear();
+                cin.ignore(1000, '\n');
+                cin >> target;
+            }
+
             BinaryNode *p = bst.search(target);
             if(p != nullptr)
                 cout << "Found" << endl;
             else
                 cout << "Not found" << endl;
+
         } else if(option == 3) {        // add item
             int n;
             cout << "Enter a number to add : ";
@@ -52,10 +69,10 @@ int main() {
             } else {
                 cout << "Binary Search tree is not balanced" << endl;
             }
-        } else if(option == 0)
+        } else if(option == 8)
             cout << "Bye! \n";
         else
-            cout << "Sorry. You have entered an invalid option. \n";
+            cout << " Sorry. You have entered an invalid option."<<endl;
     }
     return 0;
 }
@@ -70,8 +87,13 @@ void displayMenu() {
     cout << "5 Display total number of items \n";
     cout << "6 Display the height \n";
     cout << "7 Check if tree is balanced \n";
-    cout << "0 Exit \n";
+    cout << "8 Exit \n";
     cout << "--------------------------------\n";
-    cout << "Enter option : ";
     cout.flush();
 }
+
+bool isInteger(double num){         // checks if input is integer
+    return num == ceil(num);
+}
+
+

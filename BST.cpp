@@ -156,7 +156,7 @@ void BST::remove(BinaryNode *&t, ItemType target) {
 // -------------- traverse the tree in "inOrder" process (smallest to biggest)-------------------
 void BST::inorder() {
     if(isEmpty()) {
-        cout << "No item found" << endl;
+        cout << "BST does not Exist" << endl;
     } else {
         inorder(root);
     }
@@ -224,16 +224,23 @@ int BST::countNodes(BinaryNode *t) {
     return 0;
 }
 
-// ------------------------ check if the binary search tree is balanced ------------------------------
-bool BST::isBalanced() {
+// check if the binary search tree is balanced
+bool BST::isBalanced()
+{
     return isBalanced(root);
 }
 
-bool BST::isBalanced(BinaryNode *t) {
-    set<int> heightSet;
-    checkNode(heightSet, t, 0);
-    vector<int> v(heightSet.begin(), heightSet.end());
-    return (heightSet.size() < 3) && ((heightSet.size() == 2) ? v.at(1) - v.at(0) < 2 : true);
+bool BST::isBalanced(BinaryNode *t)
+{
+    if (t)
+    {
+        int leftHeight = getHeight(t->left);	// height of left sub-tree
+        int rightHeight = getHeight(t->right);	// height of right sub-tree
+        bool isBalancedNode = (abs(leftHeight - rightHeight) <= 1);
+        return (isBalancedNode && isBalanced(t->left) && isBalanced(t->right));
+    }
+    else
+        return true;
 }
 
 void BST::checkNode(set<int> &heightSet, BinaryNode *node, int height) {

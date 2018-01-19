@@ -3,4 +3,4 @@ project(DSA_Assignment)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(DSA_Assignment main.cpp BST.cpp BST.h BinaryNode.h)
+add_executable(DSA_Assignment main.cpp BST.cpp BST.h BinaryNode.h Queue.cpp Queue.h)

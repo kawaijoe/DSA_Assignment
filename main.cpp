@@ -6,6 +6,7 @@
 
 bool isInteger(double num);
 void displayMenu();
+bool is_digits(const std::string &str);
 
 int main() {
 
@@ -96,4 +97,6 @@ bool isInteger(double num){         // checks if input is integer
     return num == ceil(num);
 }
 
-
+bool is_digits(const std::string &str) {
+    return str.find_first_not_of("0123456789") == std::string::npos;
+}

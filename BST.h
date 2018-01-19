@@ -18,17 +18,21 @@ using namespace std;
 class BST {
 private:
     // root of the BST
-    BinaryNode* root;
+    BinaryNode *root;
 
     // isBalance() helper
     void checkNode(set<int> &heightSet, BinaryNode *node, int height);
 
     // balance() helper
-    int getHeightDiff(BinaryNode* temp);
-    BinaryNode* rr_rotation(BinaryNode* parent);
-    BinaryNode* ll_rotation(BinaryNode* parent);
-    BinaryNode* lr_rotation(BinaryNode* parent);
-    BinaryNode* rl_rotation(BinaryNode* parent);
+    int getHeightDiff(BinaryNode *temp);
+
+    BinaryNode *rr_rotation(BinaryNode *parent);
+
+    BinaryNode *ll_rotation(BinaryNode *parent);
+
+    BinaryNode *lr_rotation(BinaryNode *parent);
+
+    BinaryNode *rl_rotation(BinaryNode *parent);
 
 public:
     // Constructor
@@ -38,48 +42,55 @@ public:
     ~BST();
 
     // search an item in the binary search tree
-    BinaryNode* search(ItemType target);
-    BinaryNode* search(BinaryNode* t, ItemType target);
+    BinaryNode *search(ItemType target);
+
+    BinaryNode *search(BinaryNode *t, ItemType target);
 
     // add an item to the binary search tree
     void insert(ItemType item);
-    void insert(BinaryNode* &t, ItemType item);
+
+    void insert(BinaryNode *&t, ItemType item);
 
     // delete an item from the binary search tree
     void remove(ItemType item);
-    void remove(BinaryNode* &t, ItemType item);
+
+    BinaryNode *remove(BinaryNode *&t, ItemType item);
 
     // traverse the binary search tree in inOrder(smallest to biggest)
     void inorder();
-    void inorder(BinaryNode* t);
+
+    void inorder(BinaryNode *t);
 
     // traverse the binary search tree in preOrder(Parent to child)
     void preorder();
-    void preorder(BinaryNode* t);
+
+    void preorder(BinaryNode *t);
 
     // traverse the binary search tree in postOrder(child to parent)
     void postorder();
-    void postorder(BinaryNode* t);
+
+    void postorder(BinaryNode *t);
 
     // compute the height of the binary search tree
     int getHeight();
-    int getHeight(BinaryNode* t);
+
+    int getHeight(BinaryNode *t);
 
     // count the number of nodes in the binary search tree
     int countNodes();
-    int countNodes(BinaryNode* t);
+
+    int countNodes(BinaryNode *t);
 
     // check if the binary search tree is empty
     bool isEmpty();
-    bool isEmpty(BinaryNode* t);
 
     // Check if the binary search tree is balanced
     bool isBalanced();
-    bool isBalanced(BinaryNode* t);
+
+    bool isBalanced(BinaryNode *t);
 
     // Balance tree
-    BinaryNode* balance();
-    BinaryNode* balance(BinaryNode* temp);
+    BinaryNode *balance(BinaryNode *temp);
 
 };
 

@@ -12,7 +12,7 @@ Queue::Queue() = default;;
 
 Queue::~Queue() = default;;
 
-bool Queue::enqueue(ItemType item) {
+bool Queue::enqueue(QItemType item) {
 
     auto * newNode = new Node;
     newNode->item = item;
@@ -39,7 +39,7 @@ bool Queue::dequeue() {
 
 }
 
-bool Queue::dequeue(ItemType& item) {
+bool Queue::dequeue(QItemType& item) {
     auto * temp = new Node;
     temp = frontNode;
     item = temp->item;
@@ -51,7 +51,7 @@ bool Queue::dequeue(ItemType& item) {
 
 bool Queue::isEmpty() { return frontNode == nullptr && backNode == nullptr; }
 
-void Queue::getFront(ItemType& item) { item = frontNode->item; }
+void Queue::getFront(QItemType& item) { item = frontNode->item; }
 
 void Queue::displayItems() {
     Node* temp = frontNode;
@@ -60,5 +60,6 @@ void Queue::displayItems() {
         temp = temp->next;
     }
 }
+
 
 

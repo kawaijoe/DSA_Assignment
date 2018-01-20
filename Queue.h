@@ -8,13 +8,14 @@
 
 #include "BinaryNode.h"
 
+typedef BinaryNode* QItemType;
 /** ADT queue - Pointer-based implementation. */
 class Queue {
-private:
+protected:
     /** A node on the queue. */
     struct Node {
         /** A data item on the queue. */
-        ItemType item;
+        QItemType item;
         /** Pointer to next node.     */
         Node *next;
     }; // end Node
@@ -35,13 +36,13 @@ public:
     // Queue operations:
     bool isEmpty();
 
-    bool enqueue(ItemType item);
+    bool enqueue(BinaryNode *item);
 
     bool dequeue();
 
-    bool dequeue(ItemType &item);
+    bool dequeue(QItemType &item);
 
-    void getFront(ItemType &item);
+    void getFront(QItemType &item);
 
     void displayItems();
 };

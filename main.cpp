@@ -11,7 +11,6 @@ bool is_digits(const std::string &str);
 int main() {
 
     BST bst;
-    ItemType target;
 
     int dataArray[10] = {55, 28, 87, 32, 90, 16, 45, 79, 66, 30};
 

@@ -6,7 +6,6 @@
 #define DSA_ASSIGNMENT_BINARYNODE_H
 
 typedef int ItemType;
-
 struct BinaryNode {
     ItemType item;
     BinaryNode *left;

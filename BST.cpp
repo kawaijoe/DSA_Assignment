@@ -216,7 +216,7 @@ BinaryNode<T> *BST<T>::remove(BinaryNode<T> *&t, T item) {
         // search for the node to be deleted in right subtree
         remove(t->right, item);
     } else if(t->left && t->right) {
-        // if found and have two parents
+        // if found and have two children
         BinaryNode<T> *successor = t->left;
         while(successor->right != nullptr)
             successor = successor->right;
@@ -230,8 +230,7 @@ BinaryNode<T> *BST<T>::remove(BinaryNode<T> *&t, T item) {
         // replace the node’s item with that of the successor
         t->item = n;
     } else {
-        // if found and is leave
-
+        // if found and is leaf
         // set temp to be the node that is the child
         BinaryNode<T> *temp = t->left ? t->left : t->right;
 
@@ -464,7 +463,7 @@ void BST<T>::printTree(int space) {
 template <class T>
 void BST<T>::printTree(BinaryNode<T> *root, int space) {
     // Base case
-    if(root == NULL)
+    if(root == nullptr)
         return;
 
     // Increase distance between levels

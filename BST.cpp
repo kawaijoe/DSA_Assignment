@@ -245,7 +245,7 @@ BinaryNode<T> *BST<T>::remove(BinaryNode<T> *&t, T item) {
             *t = *temp;
         }
         // delete the node
-        free(temp);
+        delete temp;
     }
 
     if(t == nullptr) return t;
@@ -297,90 +297,6 @@ void BST<T>::inorder(BinaryNode<T> *t) {
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * preorder()
- *
- * Description:
- *  preorder(BinaryNode<T> *t) wrapper; automatically printing the item from the root node.
- *
- * Input Parameter:
- *  NIL
- *
- * Return Value:
- *  void
- */
-template <class T>
-void BST<T>::preorder() {
-    if(isEmpty()) {
-        cout << "No items found." << endl;
-    } else {
-        preorder(root);
-    }
-}
-
-/*
- * preorder(BinaryNode<T> *t)
- *
- * Description:
- *  Traverse the tree in "PreOrder" process (Parent first then Child).
- *
- * Input Parameter:
- *  BinaryNode<T> *t
- *
- * Return Value:
- *  void
- */
-template <class T>
-void BST<T>::preorder(BinaryNode<T> *t) {
-    if(t) {
-        cout << t->item << endl;
-        preorder(t->left);
-        preorder(t->right);
-    }
-}
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * postorder()
- *
- * Description:
- *  preorder(BinaryNode<T> *t) wrapper; automatically printing the item from the root node.
- *
- * Input Parameter:
- *  NIL
- *
- * Return Value:
- *  void
- */
-template <class T>
-void BST<T>::postorder() {
-    if(isEmpty()) {
-        cout << "No items found" << endl;
-    } else {
-        postorder(root);
-    }
-}
-
-/*
- * postorder(BinaryNode<T> *t)
- *
- * Description:
- *  Traverse the tree in "PostOrder" process (Children first then parent).
- *
- * Input Parameter:
- *  BinaryNode<T> *t
- *
- * Return Value:
- *  void
- */
-template <class T>
-void BST<T>::postorder(BinaryNode<T> *t) {
-    if(t) {
-        postorder(t->left);
-        postorder(t->right);
-        cout << t->item << endl;
-    }
-}
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * getHeight()
  *
  * Description:
@@ -412,41 +328,6 @@ int BST<T>::getHeight() {
 template <class T>
 int BST<T>::getHeight(BinaryNode<T> *t) {
     if(t) return 1+max(getHeight(t->left), getHeight(t->right));
-    return 0;
-}
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * countNodes()
- *
- * Description:
- *  countNodes(BinaryNode<T> *t) wrapper; automatically counting from the root node.
- *
- * Input Parameter:
- *  NIL
- *
- * Return Value:
- *  int
- */
-template <class T>
-int BST<T>::countNodes() {
-    return countNodes(root);
-}
-
-/*
- * countNodes(BinaryNode<T> *t)
- *
- * Description:
- *  Count the number of the nodes in the tree.
- *
- * Input Parameter:
- *  BinaryNode<T> *t
- *
- * Return Value:
- *  int
- */
-template <class T>
-int BST<T>::countNodes(BinaryNode<T> *t) {
-    if(t) return 1+countNodes(t->left)+countNodes(t->right);
     return 0;
 }
 

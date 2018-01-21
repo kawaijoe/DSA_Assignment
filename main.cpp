@@ -24,7 +24,7 @@
 string displayMenu();
 void initBST();
 int validateIntData(const string &query);
-bool isDigit(const std::string &str);
+bool isDigit(const string &str);
 
 BST<int> bst;
 
@@ -79,8 +79,6 @@ int main() {
                 break;
         }
     }
-
-
     return 0;
 }
 
@@ -178,5 +176,5 @@ int validateIntData(const string &query) {
  *  bool
  */
 bool isDigit(const string &str) {
-    return str.find_first_not_of("0123456789") == std::string::npos;
+    return str.find_first_not_of("0123456789") == string::npos;
 }

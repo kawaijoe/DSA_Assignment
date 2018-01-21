@@ -67,21 +67,9 @@ public:
     void inorder();
     void inorder(BinaryNode<T> *t);
 
-    // traverse the binary search tree in preOrder(Parent to child)
-    void preorder();
-    void preorder(BinaryNode<T> *t);
-
-    // traverse the binary search tree in postOrder(child to parent)
-    void postorder();
-    void postorder(BinaryNode<T> *t);
-
     // compute the height of the binary search tree
     int getHeight();
     int getHeight(BinaryNode<T> *t);
-
-    // count the number of nodes in the binary search tree
-    int countNodes();
-    int countNodes(BinaryNode<T> *t);
 
     // check if the binary search tree is empty
     bool isEmpty();

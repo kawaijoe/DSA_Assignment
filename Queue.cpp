@@ -1,65 +1,87 @@
 //
-// Created by David on 19/01/2018.
+// Created by Joe Kawai on 10/12/17.
 //
-#include <iostream>
+#include "Queue.h"
 
 using namespace std;
 
-#include "Queue.h"
+template <class T>
+Queue<T>::Queue() {
+    frontNode = nullptr;
+    backNode = nullptr;
+}
 
-Queue::Queue() = default;;
+template <class T>
+Queue<T>::~Queue() {
+    Node *temp;
+    while(frontNode) {
+        temp = frontNode;
+        frontNode = frontNode->next;
+        delete temp;
+    }
+}
 
-
-Queue::~Queue() = default;;
-
-bool Queue::enqueue(QItemType item) {
-
-    auto * newNode = new Node;
+template <class T>
+bool Queue<T>::enqueue(T item) {
+    Node *newNode = new Node;
     newNode->item = item;
     newNode->next = nullptr;
 
-    if (isEmpty()) {
+    if(isEmpty()) {
         frontNode = newNode;
         backNode = newNode;
-    }
-    else {
+    } else {
         backNode->next = newNode;
         backNode = newNode;
     }
     return true;
 }
 
-bool Queue::dequeue() {
-    auto * temp = new Node;
-    temp = frontNode;
-    frontNode = frontNode->next;
-
-    delete temp;
-    return true;
-
+template <class T>
+bool Queue<T>::dequeue() {
+    if(!isEmpty()) {
+        Node *temp = frontNode;
+        frontNode = temp->next;
+        delete temp;
+        return true;
+    }
+    return false;
 }
 
-bool Queue::dequeue(QItemType& item) {
-    auto * temp = new Node;
-    temp = frontNode;
-    item = temp->item;
-    frontNode = frontNode->next;
-
-    delete temp;
-    return true;
+template <class T>
+T Queue<T>::getFront() {
+    if(!isEmpty())
+        return frontNode->item;
 }
 
-bool Queue::isEmpty() { return frontNode == nullptr && backNode == nullptr; }
+template <class T>
+bool Queue<T>::isEmpty() const {
+    return frontNode == nullptr;
+}
 
-void Queue::getFront(QItemType& item) { item = frontNode->item; }
-
-void Queue::displayItems() {
-    Node* temp = frontNode;
-    while (temp != nullptr) {
-        cout << temp->item << endl;
+template <class T>
+void Queue<T>::displayItems() {
+    int count = 0;
+    Node *temp = frontNode;
+    while(temp) {
+        cout << ++count << " - " << temp->item << endl;
         temp = temp->next;
     }
+    cout << "---------------" << endl;
 }
 
+template <class T>
+class Queue<T>::Node *Queue<T>::getBackNode() const {
+    return backNode;
+}
 
-
+template <class T>
+int Queue<T>::getNoOfElements() {
+    int count = 0;
+    Node *temp = frontNode;
+    while(temp) {
+        count++;
+        temp = temp->next;
+    }
+    return count;
+}

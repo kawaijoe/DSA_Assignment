@@ -3,99 +3,111 @@
 #include <iostream>
 #include "BST.h"
 
+string displayMenu();
+void initBST();
+int validateIntData(const string &query);
+bool isDigit(const std::string &str);
 
-bool isInteger(double num);
-void displayMenu();
-bool is_digits(const std::string &str);
+BST<int> bst;
 
 int main() {
+    int option = -1;
 
-    BST bst;
+    initBST();
 
-    int dataArray[10] = {55, 28, 87, 32, 90, 16, 45, 79, 66, 30};
+    while(option != 0) {
+        option = validateIntData(displayMenu());
+        switch(option) {
+            // Exit
+            case 0:
+                cout << "Thank you for using Binary Search Tree Demo." << endl;
+                break;
 
-    for(int i : dataArray) {
-        bst.insert(i);
-    }
+            // Search for an item
+            case 1:
+                cout << (bst.search(validateIntData("Please enter value for search: ")) != nullptr
+                         ? "Found" : "Not Found") << endl;
+                break;
 
+            // Add a new item
+            case 2:
+                bst.insert(validateIntData("Please enter value to add: "));
+                break;
 
-    int option = 0;
+            // Delete an item
+            case 3:
+                bst.remove(validateIntData("Please enter value to remove: "));
+                break;
 
-    while(option != 8) {
-        displayMenu();
-        cout << "Enter option : ";
-        if (!(cin >> option)) {
-            cin.clear();
-            cin.ignore(1000, '\n');
+            // Display values in ascending order
+            case 4:
+                bst.inorder();
+                break;
+
+            // Display level-by-level traversal
+            case 5:
+                bst.printLevelOrder();
+                break;
+
+            // Display tree
+            case 6:
+                bst.printTree(3);
+                break;
+
+            // Any other number
+            default:
+                option = -1;
+                cout << "Invalid data entered. Please try again." << endl;
+                break;
         }
-
-        if(option == 1)    // display items
-            bst.inorder();
-        else if(option == 2) {      // search Item
-            cout << "Enter a number to search : ";
-            cin >> target;
-
-            while(cin.fail() || !isInteger(target)) {   // checks if input is integer
-                cout << "Please enter a number..." << endl;
-                cout << "Enter a number to search: ";
-                cin.clear();
-                cin.ignore(1000, '\n');
-                cin >> target;
-            }
-
-            BinaryNode *p = bst.search(target);
-            if(p != nullptr)
-                cout << "Found" << endl;
-            else
-                cout << "Not found" << endl;
-
-        } else if(option == 3) {        // add item
-            int n;
-            cout << "Enter a number to add : ";
-            cin >> n;
-            bst.insert(n);
-        } else if(option == 4) {    // delete item
-            int n;
-            cout << "Enter a number to delete : ";
-            cin >> n;
-            bst.remove(n);
-        } else if(option == 5) {    // display number of items
-            cout << "total Number of items: " << bst.countNodes() << endl;
-        } else if(option == 6) {  // display height
-            cout << "Height of Binary Tree: " << bst.getHeight() << endl;
-        } else if(option == 7) { // check if tree is balanced
-            if(bst.isBalanced()) {
-                cout << "Binary Search tree is balanced" << endl;
-            } else {
-                cout << "Binary Search tree is not balanced" << endl;
-            }
-        } else if(option == 8)
-            cout << "Bye! \n";
-        else
-            cout << " Sorry. You have entered an invalid option."<<endl;
     }
+
+
     return 0;
 }
 
-void displayMenu() {
-    cout << "\nBinary Search Tree Demo \n";
-    cout << "--------------------------------\n";
-    cout << "1 Display all the items in order\n";
-    cout << "2 Search for an item \n";
-    cout << "3 Add a new item \n";
-    cout << "4 Delete an item \n";
-    cout << "5 Display total number of items \n";
-    cout << "6 Display the height \n";
-    cout << "7 Check if tree is balanced \n";
-    cout << "8 Exit \n";
-    cout << "--------------------------------\n";
-    cout.flush();
+string displayMenu() {
+    return "\nBinary Search Tree Demo \n"
+            "--------------------------------\n"
+            "1 Search for an item\n"
+            "2 Add a new item \n"
+            "3 Delete an item \n"
+            "4 Display values in ascending order \n"
+            "5 Display level-by-level traversal \n"
+            "6 Display tree \n"
+            "0 Exit \n"
+            "--------------------------------\n"
+            "Enter option: ";
 }
 
-bool isInteger(double num){         // checks if input is integer
-    return num == ceil(num);
+void initBST() {
+    cout << "Binary Search Tree Initializer" << endl;
+    int value = validateIntData("Enter value: ");
+    cout << "Initializing Binary Search Tree..." << endl;
+
+    int total = 0;
+    int i = 0;
+    while(total < value) {
+        total += ++i;
+        cout << "\nInserting " << i << "..." << endl;
+        bst.insert(i);
+    }
 }
 
-bool is_digits(const std::string &str) {
+int validateIntData(const string &query) {
+    string data;
+    while(true) {
+        cout << query;
+        cout.flush();
+        getline(cin, data);
+
+        if(!isDigit(data) || data.empty())
+            cout << "Invalid data entered. Please try again." << endl;
+        else
+            return stoi(data);
+    }
+}
+
+bool isDigit(const std::string &str) {
     return str.find_first_not_of("0123456789") == std::string::npos;
 }

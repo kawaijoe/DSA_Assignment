@@ -1,49 +1,47 @@
 //
-// Created by David on 19/01/2018.
+// Created by Joe Kawai on 10/12/17.
 //
 
 #ifndef DSA_ASSIGNMENT_QUEUE_H
 #define DSA_ASSIGNMENT_QUEUE_H
 
+#include <iostream>
+#include <string>
 
-#include "BinaryNode.h"
+using namespace std;
 
-typedef BinaryNode* QItemType;
-/** ADT queue - Pointer-based implementation. */
+template <class T>
 class Queue {
-protected:
-    /** A node on the queue. */
+private:
     struct Node {
-        /** A data item on the queue. */
-        QItemType item;
-        /** Pointer to next node.     */
+        T item;
         Node *next;
-    }; // end Node
+    };
 
-    /** Pointer to front node in the queue. */
     Node *frontNode;
-    /** Pointer to back node in the queue. */
     Node *backNode;
 
 public:
-
-    /** Default constructor. */
     Queue();
 
-    /** Destructor. */
     ~Queue();
 
-    // Queue operations:
-    bool isEmpty();
+    bool isEmpty() const;
 
-    bool enqueue(BinaryNode *item);
+    bool enqueue(T item);
 
     bool dequeue();
 
-    bool dequeue(QItemType &item);
-
-    void getFront(QItemType &item);
+    T getFront();
 
     void displayItems();
+
+    int getNoOfElements();
+
+    Node *getBackNode() const;
 };
+
+// Template workaround (Removed BST.cpp from CMakeLists.txt's add_executable())
+#include "Queue.cpp"
+
 #endif //DSA_ASSIGNMENT_QUEUE_H

@@ -14,25 +14,22 @@ using namespace std;
 
 #include "BinaryNode.h"
 
-
+template <class T>
 class BST {
 private:
     // root of the BST
-    BinaryNode *root;
-
-    // isBalance() helper
-    void checkNode(set<int> &heightSet, BinaryNode *node, int height);
+    BinaryNode<T> *root;
 
     // balance() helper
-    int getHeightDiff(BinaryNode *temp);
+    int getHeightDiff(BinaryNode<T> *temp);
 
-    BinaryNode *rr_rotation(BinaryNode *parent);
+    BinaryNode<T> *rr_rotation(BinaryNode<T> *parent);
 
-    BinaryNode *ll_rotation(BinaryNode *parent);
+    BinaryNode<T> *ll_rotation(BinaryNode<T> *parent);
 
-    BinaryNode *lr_rotation(BinaryNode *parent);
+    BinaryNode<T> *lr_rotation(BinaryNode<T> *parent);
 
-    BinaryNode *rl_rotation(BinaryNode *parent);
+    BinaryNode<T> *rl_rotation(BinaryNode<T> *parent);
 
 public:
     // Constructor
@@ -42,44 +39,44 @@ public:
     ~BST();
 
     // search an item in the binary search tree
-    BinaryNode *search(ItemType target);
+    BinaryNode<T> *search(T target);
 
-    BinaryNode *search(BinaryNode *t, ItemType target);
+    BinaryNode<T> *search(BinaryNode<T> *t, T target);
 
     // add an item to the binary search tree
-    void insert(ItemType item);
+    void insert(T item);
 
-    void insert(BinaryNode *&t, ItemType item);
+    void insert(BinaryNode<T> *&t, T item);
 
     // delete an item from the binary search tree
-    void remove(ItemType item);
+    void remove(T item);
 
-    BinaryNode *remove(BinaryNode *&t, ItemType item);
+    BinaryNode<T> *remove(BinaryNode<T> *&t, T item);
 
     // traverse the binary search tree in inOrder(smallest to biggest)
     void inorder();
 
-    void inorder(BinaryNode *t);
+    void inorder(BinaryNode<T> *t);
 
     // traverse the binary search tree in preOrder(Parent to child)
     void preorder();
 
-    void preorder(BinaryNode *t);
+    void preorder(BinaryNode<T> *t);
 
     // traverse the binary search tree in postOrder(child to parent)
     void postorder();
 
-    void postorder(BinaryNode *t);
+    void postorder(BinaryNode<T> *t);
 
     // compute the height of the binary search tree
     int getHeight();
 
-    int getHeight(BinaryNode *t);
+    int getHeight(BinaryNode<T> *t);
 
     // count the number of nodes in the binary search tree
     int countNodes();
 
-    int countNodes(BinaryNode *t);
+    int countNodes(BinaryNode<T> *t);
 
     // check if the binary search tree is empty
     bool isEmpty();
@@ -87,11 +84,23 @@ public:
     // Check if the binary search tree is balanced
     bool isBalanced();
 
-    bool isBalanced(BinaryNode *t);
+    bool isBalanced(BinaryNode<T> *t);
 
     // Balance tree
-    BinaryNode *balance(BinaryNode *temp);
+    BinaryNode<T> *balance(BinaryNode<T> *temp);
+
+    // Display level-by-level traversal
+    void printLevelOrder();
+
+    void printTree(BinaryNode<T> *root, int space);
+
+    void printTree(int space);
+
+    void printLevelOrder(BinaryNode<T> *root);
 
 };
+
+// Template workaround (Removed BST.cpp from CMakeLists.txt's add_executable())
+#include "BST.cpp"
 
 #endif //DSA_ASSIGNMENT_BST_H

@@ -5,9 +5,9 @@
 #ifndef DSA_ASSIGNMENT_BINARYNODE_H
 #define DSA_ASSIGNMENT_BINARYNODE_H
 
-typedef int ItemType;
+template <class T>
 struct BinaryNode {
-    ItemType item;
+    T item;
     BinaryNode *left;
     BinaryNode *right;
 };

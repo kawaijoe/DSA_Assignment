@@ -1,3 +1,21 @@
+/*
+ *  ____       _____       _____
+ * /\  _`\    /|  _ \     /\___ \
+ * \ \ \/\ \  |/\   |     \/__/\ \
+ *  \ \ \ \ \  \// __`\/\    _\ \ \
+ *   \ \ \_\ \ /|  \L>  <_  /\ \_\ \
+ *    \ \____/ | \_____/\/  \ \____/
+ *     \/___/   \/____/\/    \/___/
+ *
+ * Team Member:
+ *  David Chew En-Lai   -   S10173143G
+ *  Joe Kawai           -   S10166858B
+ *
+ * Features:
+ *  Validation
+ *
+ */
+
 #include <cstdio>
 #include <cmath>
 #include <iostream>
@@ -66,6 +84,18 @@ int main() {
     return 0;
 }
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * displayMenu()
+ *
+ * Description:
+ *  Builds the menu text string.
+ *
+ * Input Parameter:
+ *  NIL
+ *
+ * Return Value:
+ *  string
+ */
 string displayMenu() {
     return "\nBinary Search Tree Demo \n"
             "--------------------------------\n"
@@ -80,6 +110,19 @@ string displayMenu() {
             "Enter option: ";
 }
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * initBST()
+ *
+ * Description:
+ *  Initialises Binary Search Tree with values
+ *  Based on the 2. Introduction in the assignment brief
+ *
+ * Input Parameter:
+ *  NIL
+ *
+ * Return Value:
+ *  void
+ */
 void initBST() {
     cout << "Binary Search Tree Initializer" << endl;
     int value = validateIntData("Enter value: ");
@@ -94,6 +137,19 @@ void initBST() {
     }
 }
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * validateIntData(const string &query)
+ *
+ * Description:
+ *  Data validator method. The user will pass in a 'query' for the user and the method will ensure the user enters a
+ *  numerical value. The method will continue looping if the user fails to enter an validated value.
+ *
+ * Input Parameter:
+ *  const string &query
+ *
+ * Return Value:
+ *  int
+ */
 int validateIntData(const string &query) {
     string data;
     while(true) {
@@ -108,6 +164,19 @@ int validateIntData(const string &query) {
     }
 }
 
-bool isDigit(const std::string &str) {
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * isDigit(const string &str)
+ *
+ * Description:
+ *  Check if a particular string only consist of a digit. Returns true if the string only consist of the characters;
+ *  '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'.
+ *
+ * Input Parameter:
+ *  const string &str
+ *
+ * Return Value:
+ *  bool
+ */
+bool isDigit(const string &str) {
     return str.find_first_not_of("0123456789") == std::string::npos;
 }

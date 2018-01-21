@@ -1,6 +1,22 @@
-//
-// Created by David on 14/01/2018.
-//
+/*
+ *  ____       _____       _____
+ * /\  _`\    /|  _ \     /\___ \
+ * \ \ \/\ \  |/\   |     \/__/\ \
+ *  \ \ \ \ \  \// __`\/\    _\ \ \
+ *   \ \ \_\ \ /|  \L>  <_  /\ \_\ \
+ *    \ \____/ | \_____/\/  \ \____/
+ *     \/___/   \/____/\/    \/___/
+ *
+ * Team Member:
+ *  David Chew En-Lai   -   S10173143G
+ *  Joe Kawai           -   S10166858B
+ *
+ * Features:
+ *  Adelson-Velsky and Landis(AVL) Binary Tree
+ *  Template
+ *  Printing of full tree
+ *
+ */
 
 #include <cstdlib>
 #include "BST.h"
@@ -10,22 +26,71 @@ using namespace std;
 
 #define max(x, y) (((x) > (y)) ? (x) : (y))
 
-// -------- Constructor --------------
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * BST()
+ *
+ * Description:
+ *  Constructor
+ *
+ * Input Parameter:
+ *  NIL
+ *
+ * Return Value:
+ *  NIL
+ */
 template <class T>
 BST<T>::BST() {
     root = nullptr;
 }
 
+/*
+ * ~BST()
+ *
+ * Description:
+ *  Destructor
+ *
+ * Input Parameter:
+ *  NIL
+ *
+ * Return Value:
+ *  NIL
+ */
 template <class T>
 BST<T>::~BST() = default;
 
 
-// -------- Search an item in the binary search Tree --------------------------------
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * search(T target)
+ *
+ * Description:
+ *  search(BinaryNode<T> *t, T target) wrapper; automatically searching the entire root.
+ *
+ * Input Parameter:
+ *  T target
+ *
+ * Return Value:
+ *  BinaryNode<T>
+ */
 template <class T>
 BinaryNode<T> *BST<T>::search(T target) {
     return search(root, target);
 }
 
+/*
+ * search(BinaryNode<T> *t, T target)
+ *
+ * Description:
+ *  Search for a particular target value. Returns value if found.
+ *  It will also print root if the target is the root node. While transversing, the method will print 'L' and 'R'
+ *  depending on the direction taken.
+ *
+ * Input Parameter:
+ *  BinaryNode<T> *t
+ *  T target
+ *
+ * Return Value:
+ *  BinaryNode<T>
+ */
 template <class T>
 BinaryNode<T> *BST<T>::search(BinaryNode<T> *t, T target) {
     if(!t) {
@@ -49,7 +114,18 @@ BinaryNode<T> *BST<T>::search(BinaryNode<T> *t, T target) {
     }
 }
 
-//----------- insert an item into the binary search tree --------------------------------------------------------------
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * insert(T item)
+ *
+ * Description:
+ *  insert(BinaryNode<T> *&t, T item) wrapper; automatically adding value to the entire root tree.
+ *
+ * Input Parameter:
+ *  T item
+ *
+ * Return Value:
+ *  void
+ */
 template <class T>
 void BST<T>::insert(T item) {
     if(search(item) == nullptr) {
@@ -59,6 +135,19 @@ void BST<T>::insert(T item) {
     }
 }
 
+/*
+ * insert(BinaryNode<T> *&t, T item)
+ *
+ * Description:
+ *  Insert an item into a binary tree.
+ *
+ * Input Parameter:
+ *  BinaryNode<T> *&t
+ *  T item
+ *
+ * Return Value:
+ *  void
+ */
 template <class T>
 void BST<T>::insert(BinaryNode<T> *&t, T item) {
     if(!t) {
@@ -80,7 +169,18 @@ void BST<T>::insert(BinaryNode<T> *&t, T item) {
 
 }
 
-// ----------------- delete an item from the binary search tree ----------------------------------------------------
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * remove(T item)
+ *
+ * Description:
+ *  remove(BinaryNode<T> *&t, T item) wrapper; automatically searching the item in the root to be deleted.
+ *
+ * Input Parameter:
+ *  T item
+ *
+ * Return Value:
+ *  void
+ */
 template <class T>
 void BST<T>::remove(T item) {
     if(search(item) != nullptr) {
@@ -91,7 +191,19 @@ void BST<T>::remove(T item) {
 
 }
 
-// delete an item from the binary search tree
+/*
+ * remove(BinaryNode<T> *&t, T item)
+ *
+ * Description:
+ *  Delete an item from the binary search tree.
+ *
+ * Input Parameter:
+ *  BinaryNode<T> *&t
+ *  T item
+ *
+ * Return Value:
+ *  BinaryNode<T>*
+ */
 template <class T>
 BinaryNode<T> *BST<T>::remove(BinaryNode<T> *&t, T item) {
     if(root == nullptr) {
@@ -142,7 +254,18 @@ BinaryNode<T> *BST<T>::remove(BinaryNode<T> *&t, T item) {
     t = balance(t);
 }
 
-// -------------- traverse the tree in "inOrder" process (smallest to biggest)-------------------
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * inorder()
+ *
+ * Description:
+ *  inorder(BinaryNode<T> *t) wrapper; automatically printing the item from the root node.
+ *
+ * Input Parameter:
+ *  NIL
+ *
+ * Return Value:
+ *  void
+ */
 template <class T>
 void BST<T>::inorder() {
     if(isEmpty()) {
@@ -152,6 +275,18 @@ void BST<T>::inorder() {
     }
 }
 
+/*
+ * inorder(BinaryNode<T> *t)
+ *
+ * Description:
+ *  Traverse the tree in "inOrder" process (smallest to biggest).
+ *
+ * Input Parameter:
+ *  BinaryNode<T> *t
+ *
+ * Return Value:
+ *  void
+ */
 template <class T>
 void BST<T>::inorder(BinaryNode<T> *t) {
     if(t) {
@@ -161,7 +296,18 @@ void BST<T>::inorder(BinaryNode<T> *t) {
     }
 }
 
-// ----------------- traverse the tree in "PreOrder" process (Parent first then Child) -----------------
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * preorder()
+ *
+ * Description:
+ *  preorder(BinaryNode<T> *t) wrapper; automatically printing the item from the root node.
+ *
+ * Input Parameter:
+ *  NIL
+ *
+ * Return Value:
+ *  void
+ */
 template <class T>
 void BST<T>::preorder() {
     if(isEmpty()) {
@@ -171,6 +317,18 @@ void BST<T>::preorder() {
     }
 }
 
+/*
+ * preorder(BinaryNode<T> *t)
+ *
+ * Description:
+ *  Traverse the tree in "PreOrder" process (Parent first then Child).
+ *
+ * Input Parameter:
+ *  BinaryNode<T> *t
+ *
+ * Return Value:
+ *  void
+ */
 template <class T>
 void BST<T>::preorder(BinaryNode<T> *t) {
     if(t) {
@@ -180,7 +338,18 @@ void BST<T>::preorder(BinaryNode<T> *t) {
     }
 }
 
-// ------------------- traverse the tree in "PostOrder" process (Children first then parent) ---------------------
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * postorder()
+ *
+ * Description:
+ *  preorder(BinaryNode<T> *t) wrapper; automatically printing the item from the root node.
+ *
+ * Input Parameter:
+ *  NIL
+ *
+ * Return Value:
+ *  void
+ */
 template <class T>
 void BST<T>::postorder() {
     if(isEmpty()) {
@@ -190,6 +359,18 @@ void BST<T>::postorder() {
     }
 }
 
+/*
+ * postorder(BinaryNode<T> *t)
+ *
+ * Description:
+ *  Traverse the tree in "PostOrder" process (Children first then parent).
+ *
+ * Input Parameter:
+ *  BinaryNode<T> *t
+ *
+ * Return Value:
+ *  void
+ */
 template <class T>
 void BST<T>::postorder(BinaryNode<T> *t) {
     if(t) {
@@ -199,36 +380,105 @@ void BST<T>::postorder(BinaryNode<T> *t) {
     }
 }
 
-// ----------------------- compute the height of the binary search tree ---------------------
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * getHeight()
+ *
+ * Description:
+ *  getHeight(BinaryNode<T> *t) wrapper; automatically getting height from the root node.
+ *
+ * Input Parameter:
+ *  NIL
+ *
+ * Return Value:
+ *  int
+ */
 template <class T>
 int BST<T>::getHeight() {
     return getHeight(root);
 }
 
+/*
+ * getHeight(BinaryNode<T> *t)
+ *
+ * Description:
+ *  Compute the height of the binary search tree.
+ *
+ * Input Parameter:
+ *  BinaryNode<T> *t
+ *
+ * Return Value:
+ *  int
+ */
 template <class T>
 int BST<T>::getHeight(BinaryNode<T> *t) {
     if(t) return 1+max(getHeight(t->left), getHeight(t->right));
     return 0;
 }
 
-// ---------------------- count the number of the Nodes in the Tree ------------------------------
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * countNodes()
+ *
+ * Description:
+ *  countNodes(BinaryNode<T> *t) wrapper; automatically counting from the root node.
+ *
+ * Input Parameter:
+ *  NIL
+ *
+ * Return Value:
+ *  int
+ */
 template <class T>
 int BST<T>::countNodes() {
     return countNodes(root);
 }
 
+/*
+ * countNodes(BinaryNode<T> *t)
+ *
+ * Description:
+ *  Count the number of the nodes in the tree.
+ *
+ * Input Parameter:
+ *  BinaryNode<T> *t
+ *
+ * Return Value:
+ *  int
+ */
 template <class T>
 int BST<T>::countNodes(BinaryNode<T> *t) {
     if(t) return 1+countNodes(t->left)+countNodes(t->right);
     return 0;
 }
 
-// check if the binary search tree is balanced
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * isBalanced()
+ *
+ * Description:
+ *  isBalanced(BinaryNode<T> *t) wrapper; automatically checking if the entire tree is balanced.
+ *
+ * Input Parameter:
+ *  NIL
+ *
+ * Return Value:
+ *  bool
+ */
 template <class T>
 bool BST<T>::isBalanced() {
     return isBalanced(root);
 }
 
+/*
+ * isBalanced(BinaryNode<T> *t)
+ *
+ * Description:
+ *  Check if the binary search tree is balanced.
+ *
+ * Input Parameter:
+ *  BinaryNode<T> *t
+ *
+ * Return Value:
+ *  bool
+ */
 template <class T>
 bool BST<T>::isBalanced(BinaryNode<T> *t) {
     if(t) {
@@ -241,18 +491,42 @@ bool BST<T>::isBalanced(BinaryNode<T> *t) {
     }
 }
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * printLevelOrder()
+ *
+ * Description:
+ *  printLevelOrder(BinaryNode<T> *root) wrapper; automatically print values from root node.
+ *
+ * Input Parameter:
+ *  NIL
+ *
+ * Return Value:
+ *  void
+ */
 template <class T>
 void BST<T>::printLevelOrder() {
     printLevelOrder(root);
 }
 
+/*
+ * printLevelOrder(BinaryNode<T> *root)
+ *
+ * Description:
+ *  Print level-by-level traversal of items.
+ *
+ * Input Parameter:
+ *  BinaryNode<T> *root
+ *
+ * Return Value:
+ *  void
+ */
 template <class T>
 void BST<T>::printLevelOrder(BinaryNode<T> *root) {
     // Base case
     if(root == nullptr)
         return;
 
-    // Create an empty queue for level order tarversal
+    // Create an empty queue for level order transversal
     Queue<BinaryNode<T>> queue;
 
     // Enqueue root and initialize height
@@ -276,11 +550,36 @@ void BST<T>::printLevelOrder(BinaryNode<T> *root) {
     }
 }
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * printTree(int space)
+ *
+ * Description:
+ *  printTree(BinaryNode<T> *root, int space) wrapper; automatically print values from root node.
+ *
+ * Input Parameter:
+ *  int space
+ *
+ * Return Value:
+ *  void
+ */
 template <class T>
 void BST<T>::printTree(int space) {
     printTree(root, space);
 }
 
+/*
+ * printTree(BinaryNode<T> *root, int space)
+ *
+ * Description:
+ *  Print the entire tree in a human readable form.
+ *
+ * Input Parameter:
+ *  BinaryNode<T> *root
+ *  int space
+ *
+ * Return Value:
+ *  void
+ */
 template <class T>
 void BST<T>::printTree(BinaryNode<T> *root, int space) {
     // Base case
@@ -304,19 +603,52 @@ void BST<T>::printTree(BinaryNode<T> *root, int space) {
     printTree(root->left, space);
 }
 
-// --------------------- Check if the binary search tree is empty -------------------------------
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * isEmpty()
+ *
+ * Description:
+ *  Check if the binary search tree is empty
+ *
+ * Input Parameter:
+ *  NIL
+ *
+ * Return Value:
+ *  bool
+ */
 template <class T>
 bool BST<T>::isEmpty() {
     return root == nullptr;
 }
 
-// Height Difference
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * getHeightDiff(BinaryNode<T> *temp)
+ *
+ * Description:
+ *  Calculate height difference between left and right node.
+ *
+ * Input Parameter:
+ *  BinaryNode<T> *temp
+ *
+ * Return Value:
+ *  int
+ */
 template <class T>
 int BST<T>::getHeightDiff(BinaryNode<T> *temp) {
     return getHeight(temp->left)-getHeight(temp->right);
 }
 
-// Right- Right Rotation
+/*
+ * rr_rotation(BinaryNode<T> *parent)
+ *
+ * Description:
+ *  Right- Right Rotation.
+ *
+ * Input Parameter:
+ *  BinaryNode<T> *parent
+ *
+ * Return Value:
+ *  BinaryNode<T>*
+ */
 template <class T>
 BinaryNode<T> *BST<T>::rr_rotation(BinaryNode<T> *parent) {
     BinaryNode<T> *temp;
@@ -326,7 +658,18 @@ BinaryNode<T> *BST<T>::rr_rotation(BinaryNode<T> *parent) {
     return temp;
 }
 
-// Left- Left Rotation
+/*
+ * ll_rotation(BinaryNode<T> *parent)
+ *
+ * Description:
+ *  Left- Left Rotation.
+ *
+ * Input Parameter:
+ *  BinaryNode<T> *parent
+ *
+ * Return Value:
+ *  BinaryNode<T>*
+ */
 template <class T>
 BinaryNode<T> *BST<T>::ll_rotation(BinaryNode<T> *parent) {
     BinaryNode<T> *temp;
@@ -336,7 +679,18 @@ BinaryNode<T> *BST<T>::ll_rotation(BinaryNode<T> *parent) {
     return temp;
 }
 
-// Left - Right Rotation
+/*
+ * lr_rotation(BinaryNode<T> *parent)
+ *
+ * Description:
+ *  Left - Right Rotation.
+ *
+ * Input Parameter:
+ *  BinaryNode<T> *parent
+ *
+ * Return Value:
+ *  BinaryNode<T>*
+ */
 template <class T>
 BinaryNode<T> *BST<T>::lr_rotation(BinaryNode<T> *parent) {
     BinaryNode<T> *temp;
@@ -345,7 +699,18 @@ BinaryNode<T> *BST<T>::lr_rotation(BinaryNode<T> *parent) {
     return ll_rotation(parent);
 }
 
-// Right- Left Rotation
+/*
+ * rl_rotation(BinaryNode<T> *parent)
+ *
+ * Description:
+ *  Right - Left Rotation.
+ *
+ * Input Parameter:
+ *  BinaryNode<T> *parent
+ *
+ * Return Value:
+ *  BinaryNode<T>*
+ */
 template <class T>
 BinaryNode<T> *BST<T>::rl_rotation(BinaryNode<T> *parent) {
     BinaryNode<T> *temp;
@@ -354,7 +719,18 @@ BinaryNode<T> *BST<T>::rl_rotation(BinaryNode<T> *parent) {
     return rr_rotation(parent);
 }
 
-// Balancing AVL Tree
+/*
+ * balance(BinaryNode<T> *temp)
+ *
+ * Description:
+ *  Balancing AVL Tree. This method analyses and decides if a particular pivot needs a rotation.
+ *
+ * Input Parameter:
+ *  BinaryNode<T> *temp
+ *
+ * Return Value:
+ *  BinaryNode<T>*
+ */
 template <class T>
 BinaryNode<T> *BST<T>::balance(BinaryNode<T> *temp) {
     int bal_factor = getHeightDiff(temp);

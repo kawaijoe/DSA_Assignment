@@ -1,6 +1,21 @@
-//
-// Created by Joe Kawai on 10/12/17.
-//
+/*
+ *  ____       _____       _____
+ * /\  _`\    /|  _ \     /\___ \
+ * \ \ \/\ \  |/\   |     \/__/\ \
+ *  \ \ \ \ \  \// __`\/\    _\ \ \
+ *   \ \ \_\ \ /|  \L>  <_  /\ \_\ \
+ *    \ \____/ | \_____/\/  \ \____/
+ *     \/___/   \/____/\/    \/___/
+ *
+ * Team Member:
+ *  David Chew En-Lai   -   S10173143G
+ *  Joe Kawai           -   S10166858B
+ *
+ * Features:
+ *  Template
+ *
+ */
+
 
 #ifndef DSA_ASSIGNMENT_QUEUE_H
 #define DSA_ASSIGNMENT_QUEUE_H
